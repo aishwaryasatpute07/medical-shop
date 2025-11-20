@@ -113,7 +113,6 @@ public class Cart {
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
-        recalcTotal();
     }
 
     public Timestamp getCreatedAt() {
