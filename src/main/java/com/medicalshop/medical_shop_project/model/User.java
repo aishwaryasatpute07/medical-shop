@@ -12,6 +12,9 @@ public class User {
     private String u_firstname;
     private String u_lastname;
     private Boolean isCustomer = false;
+    private String username;
+    private String password;
+    private String email;
 
     public User() {
     }
@@ -25,11 +28,6 @@ public class User {
         this.u_id = u_id;
         this.isCustomer = isCustomer;
     }
-
-    private String username;
-    private String password;
-    private String email;
-
 
     //Getters and Setters
     public Long getId() {
