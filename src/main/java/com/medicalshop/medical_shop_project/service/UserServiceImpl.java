@@ -1,6 +1,7 @@
 package com.medicalshop.medical_shop_project.service;
 
 import com.medicalshop.medical_shop_project.model.Customer;
+import com.medicalshop.medical_shop_project.model.Role;
 import com.medicalshop.medical_shop_project.model.User;
 import com.medicalshop.medical_shop_project.model.UserDTO;
 import com.medicalshop.medical_shop_project.repository.CustomerRepository;
@@ -40,10 +41,11 @@ public class UserServiceImpl implements UserService {
         String customerName = user.getFirstname();
         String customerEmail = user.getEmail();
         String customerPassword = user.getPassword();
+        Role role = Role.USER;
         Boolean isUser = true;
-        Customer customerUser = new Customer(customerId, customerName, customerEmail, customerPassword, "", isUser);
+        Customer customerUser = new Customer(customerId, customerName, customerEmail, customerPassword, "", role);
 
-        if(user.getIsCustomer()){
+        if (user.getIsCustomer()) {
             Customer savedCustomer = customerRepository.save(customerUser);
         }
 

@@ -16,7 +16,7 @@ public class Payment {
     private Date p_date;
 
     @ManyToOne
-    @JoinColumn(name = "ord_id", nullable = false)
+    @JoinColumn(name = "ordid", nullable = false)
     private Order order;
 
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, orphanRemoval = true)

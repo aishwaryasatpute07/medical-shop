@@ -8,73 +8,84 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long c_id;
-    private String c_name;
-    private String c_email;
-    private String c_password;
-    private String c_address;
-    private Boolean isUser = false;
+    private Long id;
+    private String name;
+    private String email;
+    private String password;
+    private String address;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orderList;
 
-    public Customer(){}
-
-    public Customer(Long c_id,String c_name, String c_email, String c_password, String c_address, Boolean isUser){
-        this.c_id = c_id;
-        this.c_name = c_name;
-        this.c_email = c_email;
-        this.c_address = c_address;
-        this.c_password = c_password;
-        this.isUser = isUser;
+    public Customer() {
     }
 
-    public Long getC_id() {
-        return c_id;
+    public Customer(Long id, String name, String email, String password, String address, Role role) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.role = role;
     }
 
-    public void setC_id(Long c_id) {
-        this.c_id = c_id;
+    public Long getId() {
+        return id;
     }
 
-    public String getC_name(){
-        return c_name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setC_name(String c_name) {
-        this.c_name = c_name;
+    public String getName() {
+        return name;
     }
 
-    public String getC_email() {
-        return c_email;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setC_email(String c_email) {
-        this.c_email = c_email;
+    public String getEmail() {
+        return email;
     }
 
-    public String getC_password() {
-        return c_password;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setC_password(String c_password) {
-        this.c_password = c_password;
+    public String getPassword() {
+        return password;
     }
 
-    public String getC_address() {
-        return c_address;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setC_address(String c_address) {
-        this.c_address = c_address;
+    public String getAddress() {
+        return address;
     }
 
-    public Boolean getUser() {
-        return isUser;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setUser(Boolean user) {
-        isUser = user;
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 }

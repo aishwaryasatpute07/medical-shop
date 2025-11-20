@@ -5,6 +5,7 @@ import com.medicalshop.medical_shop_project.model.CustomerDTO;
 import com.medicalshop.medical_shop_project.model.User;
 import com.medicalshop.medical_shop_project.repository.CustomerRepository;
 import com.medicalshop.medical_shop_project.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,50 +33,53 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
-        Customer customer = convertToEntity(customerDTO);
-        Customer savedCustomer = customerRepository.save(customer);
-
-        String email = customer.getC_email();
-        String password = customer.getC_password();
-        String username = customer.getC_name();
-        Long u_id = customer.getC_id();
-        Boolean isCustomer = true;
-
-        User userCustomer = new User(email, password, username ,"","",u_id, isCustomer);
-
-        if(customer.getUser())
-        {
-            User savedUser = userRepository.save(userCustomer);
+    public Customer saveCustomer(Customer customerDTO) {
+        // Check if email already exists
+        if (customerRepository.existsByEmail(customerDTO.getEmail())) {
+            throw new RuntimeException("Email already exists: " + customerDTO.getEmail());
         }
 
-        return convertToDTO(savedCustomer);
+        Customer saved = customerRepository.save(customerDTO);
+        return customerDTO;
     }
 
 
     @Override
-    public CustomerDTO updateCustomer(Long c_id, CustomerDTO customerDTO) {
-        Customer customer = customerRepository.findById(c_id).orElseThrow();
-        customer.setC_name(customerDTO.c_name());
-        customer.setC_address(customerDTO.c_address());
+    public CustomerDTO updateCustomer(Long id, CustomerDTO customerDTO) {
+        Customer customer = customerRepository.findById(id).orElseThrow();
+        customer.setName(customerDTO.name());
+        customer.setAddress(customerDTO.address());
         Customer updatedCustomer = customerRepository.save(customer);
         return convertToDTO(updatedCustomer);
     }
 
     @Override
-    public void deleteCustomer(Long c_id) {
-        customerRepository.deleteById(c_id);
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
+    }
+
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
+    @Override
+    public CustomerDTO authenticateCustomer(String email, String password) {
+        return customerRepository.findByEmailAndPassword(email, password)
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
     }
 
     //Conversion methods between DTO and Entity
     private CustomerDTO convertToDTO(Customer customer) {
-        return new CustomerDTO(customer.getC_id(), customer.getC_name(), customer.getC_email(), customer.getC_password(), customer.getC_address(), customer.getUser());
+        return new CustomerDTO(customer.getId(), customer.getName(), customer.getEmail(), customer.getPassword(), customer.getAddress(), customer.getRole());
     }
 
     private Customer convertToEntity(CustomerDTO customerDTO) {
         Customer customer = new Customer();
-        customer.setC_name(customerDTO.c_name());
-        customer.setC_address(customerDTO.c_address());
+        customer.setName(customerDTO.name());
+        customer.setAddress(customerDTO.address());
+        customer.setEmail(customerDTO.email());
+        customer.setPassword(customerDTO.password());
+        customer.setRole(customerDTO.role());
         return customer;
     }
 }

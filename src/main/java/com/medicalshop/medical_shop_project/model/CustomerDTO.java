@@ -1,4 +1,4 @@
 package com.medicalshop.medical_shop_project.model;
 
-public record CustomerDTO(Long c_id,String c_name, String c_email, String c_password, String c_address, Boolean isUser) {
+public record CustomerDTO(Long id, String name, String email, String password, String address, Role role) {
 }

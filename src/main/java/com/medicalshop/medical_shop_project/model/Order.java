@@ -20,7 +20,7 @@ public class Order {
     private List<Payment> paymentList;
 
     @ManyToOne
-    @JoinColumn(name = "c_id", nullable = false)
+    @JoinColumn(name = "cid", nullable = false)
     private Customer customer;
 
     public Order(){}
