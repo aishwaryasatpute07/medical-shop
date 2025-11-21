@@ -18,10 +18,14 @@ public class Medicine {
     @JoinColumn(name = "c_id", nullable = false)
     private Categories categories;
 
+    @ManyToOne
+    @JoinColumn(name = "disc_id", nullable = false)
+    private Discount discount;
+
     public Medicine() {
     }
 
-    public Medicine(Long m_id, String m_name, String m_manufacturer, Float m_price, Date expiry_date, Long stock_quantity, Categories categories) {
+    public Medicine(Long m_id, String m_name, String m_manufacturer, Float m_price, Date expiry_date, Long stock_quantity, Categories categories, Discount discount) {
         this.m_id = m_id;
         this.m_name = m_name;
         this.m_manufacturer = m_manufacturer;
@@ -29,6 +33,7 @@ public class Medicine {
         this.expiry_date = expiry_date;
         this.stock_quantity = stock_quantity;
         this.categories = categories;
+        this.discount = discount;
     }
 
     public Long getM_id() {
@@ -87,6 +92,14 @@ public class Medicine {
         this.categories = categories;
     }
 
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
+
     @Override
     public String toString() {
         return "Medicine{" +
@@ -97,6 +110,7 @@ public class Medicine {
                 ", expiry_date=" + expiry_date +
                 ", stock_quantity=" + stock_quantity +
                 ", categories=" + categories +
+                ", discount=" + discount +
                 '}';
     }
 }

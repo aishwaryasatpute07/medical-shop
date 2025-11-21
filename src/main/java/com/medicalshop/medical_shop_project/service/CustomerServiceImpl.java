@@ -2,10 +2,8 @@ package com.medicalshop.medical_shop_project.service;
 
 import com.medicalshop.medical_shop_project.model.Customer;
 import com.medicalshop.medical_shop_project.model.CustomerDTO;
-import com.medicalshop.medical_shop_project.model.User;
 import com.medicalshop.medical_shop_project.repository.CustomerRepository;
 import com.medicalshop.medical_shop_project.repository.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

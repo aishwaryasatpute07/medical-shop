@@ -1,80 +1,68 @@
 package com.medicalshop.medical_shop_project.model;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
+@Table(name = "discount")
 public class Discount {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long discId;
 
-    private Long disc_id;
-    private String disc_offers;
-    private Double disc_value;
-    private Date start_date;
-    private Date end_date;
+    @Column(nullable = false)
+    private String discOffers;
 
-    @ManyToOne
-    @JoinColumn(name = "p_id", nullable = false)
-    private Payment payment;
+    @Column(nullable = false)
+    private BigDecimal discValue;
 
-    public Discount(){}
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public Discount(Long disc_id, String disc_offers, Double disc_value, Date start_date, Date end_date, Payment payment){
-        this.disc_id = disc_id;
-        this.disc_offers = disc_offers;
-        this.disc_value = disc_value;
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.payment = payment;
+    @OneToMany(mappedBy = "discount")
+    private List<Medicine> medicines;
+
+    // --- Getters and Setters ---
+    public Long getDiscId() {
+        return discId;
     }
 
-    public Long getDisc_id() {
-        return disc_id;
+    public void setDiscId(Long discId) {
+        this.discId = discId;
     }
 
-    public void setDisc_id(Long disc_id) {
-        this.disc_id = disc_id;
+    public String getDiscOffers() {
+        return discOffers;
     }
 
-    public String getDisc_offers() {
-        return disc_offers;
+    public void setDiscOffers(String discOffers) {
+        this.discOffers = discOffers;
     }
 
-    public void setDisc_offers(String disc_offers) {
-        this.disc_offers = disc_offers;
+    public BigDecimal getDiscValue() {
+        return discValue;
     }
 
-    public Double getDisc_value() {
-        return disc_value;
+    public void setDiscValue(BigDecimal discValue) {
+        this.discValue = discValue;
     }
 
-    public void setDisc_value(Double disc_value) {
-        this.disc_value = disc_value;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public Date getStart_date() {
-        return start_date;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 
-    public Date getEnd_date() {
-        return end_date;
-    }
-
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
-    }
-
-    public Payment getPayment1() {
-        return payment;
-    }
-
-    public void setPayment1(Payment payment) {
-        this.payment = payment;
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 }
