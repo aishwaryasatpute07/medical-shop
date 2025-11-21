@@ -50,7 +50,7 @@ public class MedicineServiceImpl implements MedicineService {
 
     //Conversion methods between DTO and Entity
     private MedicineDTO convertToDTO(Medicine medicine) {
-        return new MedicineDTO(medicine.getM_id(), medicine.getM_name(), medicine.getM_manufacturer(), medicine.getM_price(), medicine.getExpiry_date(), medicine.getStock_quantity(), medicine.getCategories().getId());
+        return new MedicineDTO(medicine.getM_id(), medicine.getM_name(), medicine.getM_manufacturer(), medicine.getM_price(), medicine.getExpiry_date(), medicine.getStock_quantity(), medicine.getCategories().getId(), medicine.getDiscount());
     }
 
     private Medicine convertToEntity(MedicineDTO medicineDTO) {
