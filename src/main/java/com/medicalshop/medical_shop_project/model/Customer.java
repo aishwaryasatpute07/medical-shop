@@ -1,8 +1,7 @@
 package com.medicalshop.medical_shop_project.model;
 
+import com.medicalshop.medical_shop_project.model.enums.Role;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 public class Customer {

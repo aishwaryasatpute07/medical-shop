@@ -1,7 +1,7 @@
 package com.medicalshop.medical_shop_project.service;
 
 import com.medicalshop.medical_shop_project.model.Customer;
-import com.medicalshop.medical_shop_project.model.Role;
+import com.medicalshop.medical_shop_project.model.enums.Role;
 import com.medicalshop.medical_shop_project.model.User;
 import com.medicalshop.medical_shop_project.model.UserDTO;
 import com.medicalshop.medical_shop_project.repository.CustomerRepository;

@@ -1,5 +1,7 @@
 package com.medicalshop.medical_shop_project.model;
 
+import com.medicalshop.medical_shop_project.model.enums.PaymentMode;
+import com.medicalshop.medical_shop_project.model.enums.TransactionStatus;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.math.BigDecimal;
