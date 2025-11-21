@@ -1,75 +1,70 @@
 package com.medicalshop.medical_shop_project.model;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "`order`")
+@Table(name = "orders")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderId;
 
-    private Long ord_id;
-    private String prod_name;
-    private Double price;
-    private Date ord_date;
+    @Column(nullable = false)
+    private Long customerId;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Payment> paymentList;
+    @Column(nullable = false)
+    private BigDecimal totalAmount = BigDecimal.ZERO;
 
-    @ManyToOne
-    @JoinColumn(name = "cid", nullable = false)
-    private Customer customer;
+    @Column(nullable = false)
+    private BigDecimal finalAmount = BigDecimal.ZERO;
 
-    public Order(){}
+    @Column(nullable = false)
+    private String status = "PENDING";
 
-    public Order(Long ord_id, String prod_name,Double price, Date ord_date, Customer customer){
-        this.ord_id = ord_id;
-        this.prod_name = prod_name;
-        this.price = price;
-        this.ord_date = ord_date;
-        this.customer = customer;
-    }
+    private String shippingAddress;
 
-    public Long getOrd_id() {
-        return ord_id;
-    }
+    private LocalDateTime orderDate = LocalDateTime.now();
 
-    public void setOrd_date(Date ord_date) {
-        this.ord_date = ord_date;
-    }
+    // Parent side of Order -> OrderItems
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<OrderItem> orderItems;
 
-    public String getProd_name() {
-        return prod_name;
-    }
+    // Parent side of Order -> Payment
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Payment payment;
 
-    public void setProd_name(String prod_name) {
-        this.prod_name = prod_name;
-    }
+    // Getters and Setters
+    public Long getOrderId() { return orderId; }
+    public void setOrderId(Long orderId) { this.orderId = orderId; }
 
-    public Double getPrice() {
-        return price;
-    }
+    public Long getCustomerId() { return customerId; }
+    public void setCustomerId(Long customerId) { this.customerId = customerId; }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+    public BigDecimal getTotalAmount() { return totalAmount; }
+    public void setTotalAmount(BigDecimal totalAmount) { this.totalAmount = totalAmount; }
 
-    public Date getOrd_date() {
-        return ord_date;
-    }
+    public BigDecimal getFinalAmount() { return finalAmount; }
+    public void setFinalAmount(BigDecimal finalAmount) { this.finalAmount = finalAmount; }
 
-    public void setOrd_id(Long ord_id) {
-        this.ord_id = ord_id;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public Customer getCustomer() {
-        return customer;
-    }
+    public String getShippingAddress() { return shippingAddress; }
+    public void setShippingAddress(String shippingAddress) { this.shippingAddress = shippingAddress; }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+    public LocalDateTime getOrderDate() { return orderDate; }
+    public void setOrderDate(LocalDateTime orderDate) { this.orderDate = orderDate; }
+
+    public List<OrderItem> getOrderItems() { return orderItems; }
+    public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
+
+    public Payment getPayment() { return payment; }
+    public void setPayment(Payment payment) { this.payment = payment; }
 }

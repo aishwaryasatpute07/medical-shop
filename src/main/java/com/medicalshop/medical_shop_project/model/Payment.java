@@ -1,74 +1,51 @@
 package com.medicalshop.medical_shop_project.model;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "payment")
 public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long paymentId;
 
-    private Long p_id;
-    private Double amount;
-    private String paymentMethod;
-    private Date p_date;
-
-    @ManyToOne
-    @JoinColumn(name = "ordid", nullable = false)
+    // Child side of Order -> Payment
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    @JsonBackReference
     private Order order;
 
-    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Discount> discountList;
+    @Enumerated(EnumType.STRING)
+    private PaymentMode paymentMode;
 
-    public Payment(){}
+    private LocalDateTime paymentDate = LocalDateTime.now();
 
-    public Payment(Long p_id, Double amount, String paymentMethod, Date p_date, Order order){
-        this.p_id = p_id;
-        this.amount = amount;
-        this.paymentMethod = paymentMethod;
-        this.p_date = p_date;
-        this.order = order;
-    }
+    @Column(nullable = false)
+    private BigDecimal amount;
 
-    public Long getP_id() {
-        return p_id;
-    }
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus transactionStatus = TransactionStatus.PENDING;
 
-    public void setP_id(Long p_id) {
-        this.p_id = p_id;
-    }
+    // Getters and Setters
+    public Long getPaymentId() { return paymentId; }
+    public void setPaymentId(Long paymentId) { this.paymentId = paymentId; }
 
-    public Double getAmount() {
-        return amount;
-    }
+    public Order getOrder() { return order; }
+    public void setOrder(Order order) { this.order = order; }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+    public PaymentMode getPaymentMode() { return paymentMode; }
+    public void setPaymentMode(PaymentMode paymentMode) { this.paymentMode = paymentMode; }
 
-    public Date getP_date() {
-        return p_date;
-    }
+    public LocalDateTime getPaymentDate() { return paymentDate; }
+    public void setPaymentDate(LocalDateTime paymentDate) { this.paymentDate = paymentDate; }
 
-    public void setP_date(Date p_date) {
-        this.p_date = p_date;
-    }
+    public BigDecimal getAmount() { return amount; }
+    public void setAmount(BigDecimal amount) { this.amount = amount; }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public Order getOrder1() {
-        return order;
-    }
-
-    public void setOrder1(Order order) {
-        this.order = order;
-    }
+    public TransactionStatus getTransactionStatus() { return transactionStatus; }
+    public void setTransactionStatus(TransactionStatus transactionStatus) { this.transactionStatus = transactionStatus; }
 }

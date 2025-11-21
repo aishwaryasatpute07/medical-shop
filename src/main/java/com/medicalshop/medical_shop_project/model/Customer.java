@@ -17,10 +17,6 @@ public class Customer {
     @Column(nullable = false)
     private Role role;
 
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orderList;
-
     public Customer() {
     }
 
@@ -79,13 +75,5 @@ public class Customer {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
     }
 }
